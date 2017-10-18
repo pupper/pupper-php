@@ -8,7 +8,7 @@ Pupper stands for "PHP Plus React" (PPR -> Pupper). The goal is to make a Framew
 
 [See pupper on Github for more information](https://github.com/bouiboui/pupper/tree/master/app)
 
-
+## API
 ### WebSocket
 
 `WebSocket` is the class that will let you define listeners on the PHP side.
