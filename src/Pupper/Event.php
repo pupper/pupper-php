@@ -2,7 +2,7 @@
 
 namespace Pupper\Pupper;
 
-class ReactEvent
+class Event
 {
     /** @var string $name */
     private $name;
@@ -10,11 +10,25 @@ class ReactEvent
     private $value;
 
     /**
+     * @param string $name
+     * @param string $value
+     */
+    public function __construct(string $name = null, string $value = null)
+    {
+        if (null !== $name) {
+            $this->name = $name;
+        }
+        if (null !== $value) {
+            $this->value = $value;
+        }
+    }
+
+    /**
      * @param string $body
-     * @return ReactEvent
+     * @return Event
      * @throws \RuntimeException
      */
-    public static function parse(string $body): ReactEvent
+    public static function parse(string $body): Event
     {
         $json = json_decode($body, true);
         if (!array_key_exists('name', $json) || !array_key_exists('value', $json)) {
@@ -35,9 +49,9 @@ class ReactEvent
 
     /**
      * @param string $name
-     * @return ReactEvent
+     * @return Event
      */
-    public function setName(string $name): ReactEvent
+    public function setName(string $name): Event
     {
         $this->name = $name;
         return $this;
@@ -53,9 +67,9 @@ class ReactEvent
 
     /**
      * @param string $value
-     * @return ReactEvent
+     * @return Event
      */
-    public function setValue(string $value): ReactEvent
+    public function setValue(string $value): Event
     {
         $this->value = $value;
         return $this;

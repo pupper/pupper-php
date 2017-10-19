@@ -10,7 +10,7 @@ class WebSocket implements AerysWebsocket
 {
     /** @var AerysWebsocket\Endpoint $endpoint */
     public $endpoint;
-    /** @var array $listeners */
+    /** @var callable[][] $listeners */
     private $listeners = [];
 
     /**
@@ -84,12 +84,24 @@ class WebSocket implements AerysWebsocket
         // mentioned earlier.
         $body = yield $msg;
 
-        $reactEvent = ReactEvent::parse($body);
+        $event = Event::parse($body);
 
-        foreach ($this->listeners[$reactEvent->getName()] as $callback) {
-            $this->endpoint->send($callback($reactEvent), $clientId);
+        foreach ($this->getListenersForEvent($event) as $callback) {
+            $callbackResult = $callback($event->build());
+            if (null !== $callbackResult) {
+                $this->endpoint->send($callbackResult, $clientId);
+            }
         }
 
+    }
+
+    /**
+     * @param Event $event
+     * @return callable[]
+     */
+    private function getListenersForEvent(Event $event): array
+    {
+        return $this->listeners[$event->getName()];
     }
 
     /**
@@ -144,6 +156,16 @@ class WebSocket implements AerysWebsocket
             $this->listeners[$eventName] = [];
         }
         $this->listeners[$eventName][] = $callback;
+        return $this;
+    }
+
+    /**
+     * @param Event $event
+     * @return WebSocket
+     */
+    public function dispatchEvent(Event $event): WebSocket
+    {
+        $this->endpoint->broadcast($event->getValue());
         return $this;
     }
 }

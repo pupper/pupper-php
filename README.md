@@ -4,26 +4,29 @@
 
 **WORK IN PROGRESS**
 
-Pupper stands for "PHP Plus React" (PPR -> Pupper). The goal is to make a Framework that takes the best of both technologies and makes them communicate bi-directionnaly.
+Pupper stands for "PHP Plus React" (PPR > Pupper). The goal is to make a Framework that takes the best of both technologies and makes them communicate bi-directionnaly.
 
-[See pupper on Github for more information](https://github.com/bouiboui/pupper/tree/master/app)
+[See an example implementation](https://github.com/bouiboui/pupper/tree/master/app)
 
 ## API
 ### WebSocket
 
-`WebSocket` is the class that will let you define listeners on the PHP side.
+`WebSocket` is the class that initiates the WebSocket on the PHP side.
 
-The only method that you should learn about is `addListener`, which takes the event name as first parameter, and a callback function as a second parameter.
+**addListener**
+
+`addListener` takes the event name as first parameter, and a callback function as a second parameter. 
+
+If you `return` an `Event`, it will be dispatched to the client that triggered the callback. 
 
 ```php
-use Pupper\Pupper\ReactEvent;
+use Pupper\Pupper\Event;
 
 $websocket = (new Pupper\Pupper\WebSocket)
-    ->addEventListener('custom', function (ReactEvent $event) {
-        return (new ReactEvent)
+    ->addEventListener('custom', function (Event $event) {
+        return (new Event)
             ->setName('custom')
-            ->setValue('From PHP: ' . $event->getValue())
-            ->build();
+            ->setValue('From PHP: ' . $event->getValue());
     });
 
 $router = Aerys\router()
@@ -34,19 +37,19 @@ return (new Aerys\Host)
     ->expose('*', 1337);
 ```
 
-### ReactEvent
+### Event
 
-`ReactEvent` represents an event from the PHP side.
+`Event` represents an event from the PHP side.
 
 
 **Read**
 
-`ReactEvent` has `getName()` and `getValue()` methods that you can use to read the event's name and value.
+`Event` has `getName()` and `getValue()` methods to read the event's name and value.
 
 ```php
-use Pupper\Pupper\ReactEvent;
+use Pupper\Pupper\Event;
 
-function (ReactEvent $event) {
+function (Event $event) {
     echo $event->getName();
     echo $event->getValue();
 });
@@ -54,15 +57,27 @@ function (ReactEvent $event) {
 
 **Write**
 
-`ReactEvent` has a `build()` method that prepares events in the right format for `WebSocket` callbacks.
+`Event` has `setName()` and `setValue()` methods to write the event's name and value.
 
 ```php
-use Pupper\Pupper\ReactEvent;
+use Pupper\Pupper\Event;
 
-$event = (new ReactEvent)
-    ->setName('custom')
-    ->setValue('From PHP: ' . $event->getValue())
-    ->build();
+$event = (new Event)
+    ->setName('hello_event')
+    ->setValue('Hello from PHP!');
+```
+
+**Construct**
+
+`Event`'s constructor also accepts the event's name and value as parameters.
+
+```php
+use Pupper\Pupper\Event;
+
+$event = new Event(
+    'hello_event', 
+    'Hello from PHP!'
+);
 ```
 
 ## Credits
