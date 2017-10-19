@@ -8,6 +8,43 @@ Pupper stands for "PHP Plus React" (PPR > Pupper). The goal is to make a Framewo
 
 [See an example implementation](https://github.com/bouiboui/pupper/tree/master/app)
 
+## Quick start
+
+Pupper PHP is based on [Aerys](https://amphp.org/aerys/), a non-blocking PHP application and Websocket framework.
+
+Here is a quick overview of the code to get started.
+
+```php
+use Pupper\Pupper\Event;
+
+// Initiates WebSocket connection
+$websocket = (new Pupper\Pupper\WebSocket)
+
+    // Defines a callback for 'my_event'
+    ->addEventListener('my_event', function (Event $event) {
+    
+        // Dispatches to all clients
+        $websocket->broadcastEvent(
+            new Event('notify_all', 'Something has happened!');
+        );
+    
+        // Dispatches to the client that triggered the callback
+        return (new Event)
+            ->setName('operation_done')
+            ->setValue('Your value was ' . $event->getValue());
+
+    });
+
+$router = Aerys\router()
+    ->route('GET', '/ws', Aerys\websocket($websocket));
+
+return (new Aerys\Host)
+    ->use($router)
+    ->expose('*', 1337);
+```
+
+
+
 ## API
 ### WebSocket
 
@@ -28,13 +65,6 @@ $websocket = (new Pupper\Pupper\WebSocket)
             ->setName('custom')
             ->setValue('From PHP: ' . $event->getValue());
     });
-
-$router = Aerys\router()
-    ->route('GET', '/ws', Aerys\websocket($websocket));
-
-return (new Aerys\Host)
-    ->use($router)
-    ->expose('*', 1337);
 ```
 
 ### Event
