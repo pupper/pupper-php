@@ -43,8 +43,6 @@ return (new Aerys\Host)
     ->expose('*', 1337);
 ```
 
-
-
 ## API
 ### WebSocket
 
@@ -64,6 +62,21 @@ $websocket = (new Pupper\Pupper\WebSocket)
         return (new Event)
             ->setName('custom')
             ->setValue('From PHP: ' . $event->getValue());
+    });
+```
+
+**broadcastEvent**
+
+`broadcastEvent` dispatches an event to all the clients.
+```php
+use Pupper\Pupper\Event;
+
+$websocket = (new Pupper\Pupper\WebSocket)
+    ->addEventListener('player_has_joined', function (Event $event) {
+        $websocket->broadcastEvent(
+            'player_count_updated',
+            'A new player has joined!'
+        );
     });
 ```
 
