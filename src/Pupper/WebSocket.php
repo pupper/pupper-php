@@ -87,9 +87,9 @@ class WebSocket implements AerysWebsocket
         $event = Event::parse($body);
 
         foreach ($this->getListenersForEvent($event) as $callback) {
-            $callbackResult = $callback($event->build());
-            if (null !== $callbackResult) {
-                $this->endpoint->send($callbackResult, $clientId);
+            if (null !== ($callbackResult = $callback($event))) {
+                /** @var Event $callbackResult */
+                $this->endpoint->send($callbackResult->build(), $clientId);
             }
         }
 

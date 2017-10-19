@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "amphp/aerys",
-            "version": "v0.6.1",
+            "version": "v0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/aerys.git",
-                "reference": "e0befc8ad27970fb252e2e7a2216d38384a23611"
+                "reference": "cbf91d62aacb38683aac3cfcb1d72f7955e632e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/aerys/zipball/e0befc8ad27970fb252e2e7a2216d38384a23611",
-                "reference": "e0befc8ad27970fb252e2e7a2216d38384a23611",
+                "url": "https://api.github.com/repos/amphp/aerys/zipball/cbf91d62aacb38683aac3cfcb1d72f7955e632e2",
+                "reference": "cbf91d62aacb38683aac3cfcb1d72f7955e632e2",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +91,7 @@
                 "server",
                 "websocket"
             ],
-            "time": "2017-10-15T22:51:39+00:00"
+            "time": "2017-08-18T08:43:22+00:00"
         },
         {
             "name": "amphp/amp",
