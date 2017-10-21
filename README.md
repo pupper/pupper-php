@@ -38,9 +38,7 @@ $websocket = (new Pupper\Pupper\WebSocket)
 $router = Aerys\router()
     ->route('GET', '/ws', Aerys\websocket($websocket));
 
-return (new Aerys\Host)
-    ->use($router)
-    ->expose('*', 1337);
+return (new Aerys\Host)->use($router);
 ```
 
 ## API
