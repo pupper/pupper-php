@@ -10,8 +10,17 @@ class WebSocket implements AerysWebsocket
 {
     /** @var AerysWebsocket\Endpoint $endpoint */
     public $endpoint;
+    /**
+     * @var int
+     */
+    private $port;
     /** @var callable[][] $listeners */
     private $listeners = [];
+
+    public function __construct(int $port = 80)
+    {
+        $this->port = $port;
+    }
 
     /**
      * Invoked when starting the server.
@@ -54,7 +63,7 @@ class WebSocket implements AerysWebsocket
         // otherwise any site will be able to connect to your endpoint.
         // Websockets are not restricted by the same-origin-policy!
         $origin = $request->getHeader('origin');
-        if ($origin !== 'http://localhost:1337') {
+        if ($origin !== 'http://localhost:' . $this->port) {
             $response->setStatus(403);
             $response->end('<h1>origin not allowed</h1>');
             return null;
