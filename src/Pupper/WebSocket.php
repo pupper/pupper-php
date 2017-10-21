@@ -64,9 +64,11 @@ class WebSocket implements AerysWebsocket
         // Websockets are not restricted by the same-origin-policy!
         $origin = $request->getHeader('origin');
         if ($origin !== 'http://localhost:' . $this->port) {
-            $response->setStatus(403);
-            $response->end('<h1>origin not allowed</h1>');
-            return null;
+            if (!($origin === 'http://localhost' && $this->port === 80)) {
+                $response->setStatus(403);
+                $response->end('<h1>origin not allowed</h1>');
+                return null;
+            }
         }
         // Returned values will be passed to onOpen.
         // That way you can pass cookie values or the whole request object.
