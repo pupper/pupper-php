@@ -80,10 +80,10 @@ $websocket = (new Pupper\Pupper\WebSocket)
 
 **Client filtering**
 
-Set WebSocket's constructor's host and port parameters to restrict the access to your websocket .
+Set WebSocket's constructor's protocol, host and port parameters to restrict the access to your websocket .
 
 ```php
-$websocket = new \Pupper\WebSocket('your.domain.com', 80);
+$websocket = new \Pupper\WebSocket('https', 'your.domain.com', 80);
 ```
 
 
