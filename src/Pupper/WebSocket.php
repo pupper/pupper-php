@@ -111,7 +111,7 @@ class WebSocket implements AerysWebsocket
         $event = Event::parse($body);
 
         foreach ($this->getListenersForEvent($event) as $callback) {
-            if (null !== ($callbackResult = $callback($event))) {
+            if (null !== ($callbackResult = $callback($event, $clientId))) {
                 /** @var Event $callbackResult */
                 $this->endpoint->send($callbackResult->build(), $clientId);
             }
@@ -185,11 +185,18 @@ class WebSocket implements AerysWebsocket
 
     /**
      * @param Event $event
+     * @param array $clientIds
      * @return WebSocket
      */
-    public function dispatchEvent(Event $event): WebSocket
+    public function dispatchEvent(Event $event, array $clientIds = []): WebSocket
     {
-        $this->endpoint->broadcast($event->getValue());
+        if ([] === $clientIds) {
+            $this->endpoint->broadcast($event->getValue());
+            return $this;
+        }
+        foreach ($clientIds as $clientId) {
+            $this->endpoint->send($event->getValue(), $clientId);
+        }
         return $this;
     }
 
