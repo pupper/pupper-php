@@ -10,18 +10,10 @@ class WebSocket implements AerysWebsocket
 {
     /** @var AerysWebsocket\Endpoint $endpoint */
     public $endpoint;
-    /** @var string */
-    private $host;
-    /** @var int */
-    private $port;
     /** @var callable[][] $listeners */
     private $listeners = [];
-
-    public function __construct(string $host = 'localhost', int $port = TCPPort::HTTP)
-    {
-        $this->port = $port;
-        $this->host = $host;
-    }
+    /** @var RequestOrigin[] $allowedOrigins */
+    private $allowedOrigins = [];
 
     /**
      * Invoked when starting the server.
@@ -64,16 +56,34 @@ class WebSocket implements AerysWebsocket
         // otherwise any site will be able to connect to your endpoint.
         // Websockets are not restricted by the same-origin-policy!
         $origin = $request->getHeader('origin');
-        if ($origin !== 'http://'. $this->host .':' . $this->port) {
-            if (!($origin === 'http://'. $this->host && $this->port === TCPPort::HTTP)) {
-                $response->setStatus(HttpStatus::FORBIDDEN);
-                $response->end('<h1>origin not allowed</h1>');
-                return null;
-            }
+
+        if (!$this->isAllowedOrigin($origin)) {
+            $response->setStatus(HttpStatus::FORBIDDEN);
+            $response->end('<h1>origin not allowed</h1>');
+            return null;
         }
+
         // Returned values will be passed to onOpen.
         // That way you can pass cookie values or the whole request object.
         return $request->getConnectionInfo()['client_addr'];
+    }
+
+    /**
+     * @param string $origin
+     * @return bool
+     */
+    private function isAllowedOrigin(string $origin = 'localhost'): bool
+    {
+        foreach ($this->allowedOrigins as $allowedClient) {
+            $urlWithoutPort = $allowedClient->getProtocol() . '://' . $allowedClient->getHost();
+            if ($origin === $urlWithoutPort && $allowedClient->getPort() === TCPPort::HTTP) {
+                return true;
+            }
+            if ($origin === $urlWithoutPort . ':' . $allowedClient->getPort()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -180,4 +190,19 @@ class WebSocket implements AerysWebsocket
         $this->endpoint->broadcast($event->getValue());
         return $this;
     }
+
+    /**
+     * @param string $host
+     * @param int $port
+     * @return WebSocket
+     */
+    public function allowOrigin(string $host, int $port): WebSocket
+    {
+        $this->allowedOrigins[] = (new RequestOrigin)
+            ->setHost($host)
+            ->setPort($port);
+
+        return $this;
+    }
+
 }
