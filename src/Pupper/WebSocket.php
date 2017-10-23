@@ -5,6 +5,8 @@ namespace Pupper\Pupper;
 use Aerys\Request;
 use Aerys\Response;
 use Aerys\Websocket as AerysWebsocket;
+use Pupper\Pupper\Constants\HttpStatus;
+use Pupper\Pupper\Constants\TCPPort;
 
 class WebSocket implements AerysWebsocket
 {

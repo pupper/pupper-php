@@ -2,6 +2,9 @@
 
 namespace Pupper\Pupper;
 
+use Pupper\Pupper\Constants\HttpProtocol;
+use Pupper\Pupper\Constants\TCPPort;
+
 class RequestOrigin
 {
     /** @var string */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pupper\Pupper;
+namespace Pupper\Pupper\Constants;
 
 class HttpProtocol
 {
