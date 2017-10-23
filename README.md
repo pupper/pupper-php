@@ -35,10 +35,10 @@ $websocket = (new Pupper\Pupper\WebSocket)
 
     });
 
-$router = Aerys\router()
-    ->route('GET', '/ws', Aerys\websocket($websocket));
+$router = Aerys\router()->route('GET', '/', Aerys\websocket($websocket));
 
-return (new Aerys\Host)->use($router);
+// Exposes the websocket to the 1337 port
+return (new Aerys\Host)->use($router)->expose('*', 1337);
 ```
 
 ## API
@@ -77,6 +77,15 @@ $websocket = (new Pupper\Pupper\WebSocket)
         );
     });
 ```
+
+**Client filtering**
+
+Set WebSocket's constructor's host and port parameters to restrict the access to your websocket .
+
+```php
+$websocket = new \Pupper\WebSocket('your.domain.com', 80);
+```
+
 
 ### Event
 
