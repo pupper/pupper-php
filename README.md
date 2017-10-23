@@ -20,6 +20,9 @@ use Pupper\Pupper\Event;
 // Initiates WebSocket connection
 $websocket = (new Pupper\Pupper\WebSocket)
 
+    // Filter allowed clients
+    ->allowOrigin('https', 'your.domain.com', 80);
+
     // Defines a callback for 'my_event'
     ->addEventListener('my_event', function (Event $event) {
     
@@ -83,7 +86,8 @@ $websocket = (new Pupper\Pupper\WebSocket)
 Set WebSocket's constructor's protocol, host and port parameters to restrict the access to your websocket .
 
 ```php
-$websocket = new \Pupper\WebSocket('https', 'your.domain.com', 80);
+$websocket = (new \Pupper\WebSocket)
+    ->allowOrigin('https', 'your.domain.com', 80);
 ```
 
 
