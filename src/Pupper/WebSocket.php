@@ -194,13 +194,15 @@ class WebSocket implements AerysWebsocket
     }
 
     /**
+     * @param string $protocol
      * @param string $host
      * @param int $port
      * @return WebSocket
      */
-    public function allowOrigin(string $host, int $port): WebSocket
+    public function allowOrigin(string $protocol, string $host, int $port): WebSocket
     {
         $this->allowedOrigins[] = (new RequestOrigin)
+            ->setProtocol($protocol)
             ->setHost($host)
             ->setPort($port);
 
