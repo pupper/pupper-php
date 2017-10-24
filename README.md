@@ -1,6 +1,6 @@
 ![d005d89e-ff25-4450-9119-aa56ff0d8949](https://user-images.githubusercontent.com/3274103/31629229-4859fe88-b2b3-11e7-85fb-66c35710f607.png)
 
-![Software License][ico-license]
+![Software License][ico-license] [![SensioLabsInsight](https://insight.sensiolabs.com/projects/38ef8a9c-deb5-41d4-a3f3-432fa411e921/mini.png)](https://insight.sensiolabs.com/projects/38ef8a9c-deb5-41d4-a3f3-432fa411e921)
 
 Pupper stands for "PHP Plus React" (PPR > Pupper). The goal is to make a Framework that takes the best of both technologies and makes them communicate bi-directionnaly.
 
