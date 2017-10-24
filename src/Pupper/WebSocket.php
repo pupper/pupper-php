@@ -136,7 +136,6 @@ class WebSocket implements AerysWebsocket
      */
     public function onOpen(int $clientId, $handshakeData)
     {
-        // TODO: Implement onOpen() method.
     }
 
     /**
@@ -148,7 +147,6 @@ class WebSocket implements AerysWebsocket
      */
     public function onClose(int $clientId, int $code, string $reason)
     {
-        // TODO: Implement onClose() method.
     }
 
     /**
@@ -166,7 +164,6 @@ class WebSocket implements AerysWebsocket
      */
     public function onStop()
     {
-        // TODO: Implement onStop() method.
     }
 
     /**
