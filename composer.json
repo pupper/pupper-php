@@ -1,20 +1,20 @@
 {
-  "name": "pupper/pupper-php",
-  "license": "Unlicense",
-  "description": "PHP components for Pupper",
-  "authors": [
-    {
-      "name": "bouiboui",
-      "email": "dev@cod3.net"
+    "name": "pupper/pupper-php",
+    "license": "Unlicense",
+    "description": "PHP components for Pupper",
+    "authors": [
+        {
+            "name": "bouiboui",
+            "email": "dev@cod3.net"
+        }
+    ],
+    "require": {
+        "roave/security-advisories": "dev-master",
+        "amphp/aerys": "^0.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pupper\\Pupper\\": "src/Pupper"
+        }
     }
-  ],
-  "require": {
-    "roave/security-advisories": "dev-master",
-    "amphp/aerys": "^0.6.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Pupper\\Pupper\\": "src/Pupper"
-    }
-  }
 }
