@@ -10,7 +10,7 @@
     ],
     "require": {
         "roave/security-advisories": "dev-master",
-        "amphp/aerys": "^0.7.2"
+        "amphp/aerys": "^0.7.4"
     },
     "autoload": {
         "psr-4": {
