@@ -19,8 +19,8 @@ use Pupper\Pupper\Event;
 // Initiates WebSocket connection
 $websocket = (new Pupper\Pupper\WebSocket)
 
-    // Filter allowed clients
-    ->allowOrigin('https', 'your.domain.com', 80);
+    // Filter allowed clients (optional)
+    ->allowOrigin('https', 'your.domain.com', 443);
 
     // Defines a callback for 'my_event'
     ->addEventListener('my_event', function (Event $event) {
